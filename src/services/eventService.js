@@ -1,11 +1,11 @@
 const pgp = require('pg-promise')();
-const db = pgp('postgres://postgres:gusti@localhost:5432/TheEventFinder');
+const db = pgp('postgres://postgres:dadi@localhost:5432/TheEventFinder');
 
 // Might be able to do this more efficiently, by serializing param somehow,
 // like Spring does it..
 function createEvent(ageMax, ageMin, creatorId, descr, endDate, startDate,
                         genderRestrict, lati, long, eventName, eAttendees) {
-  db.none(`INSERT INTO event(age_max, age_min, creator_id, description,
+  db.none(`INSERT INTO events(age_max, age_min, creator_id, description,
             end_date, start_date, gender_restriction, lat, lgt, name, attendees)
            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
            [ageMax, ageMin, creatorId, descr, endDate, startDate,
@@ -13,11 +13,11 @@ function createEvent(ageMax, ageMin, creatorId, descr, endDate, startDate,
 }
 
 function getEvent(eventId) {
-  return db.one(`SELECT * FROM event WHERE id = $1`, [eventId]);
+  return db.one(`SELECT * FROM events WHERE id = $1`, [eventId]);
 }
 
 function deleteEvent(eventId) {
-  db.none(`DELETE FROM event WHERE id = $1`, [eventId]);
+  db.none(`DELETE FROM events WHERE id = $1`, [eventId]);
 }
 
 /*
@@ -25,9 +25,9 @@ function deleteEvent(eventId) {
 * probably not the same as the Date() format... Then we can just format the
 * current date appropriately and send it as a parameter to the function instead.
 */
-function findAllUpcomingAndOngoingEvents() {
-  return db.any(`SELECT * FROM event WHERE start_date >= $1
-                 OR (start_date > $1 AND end_date < $1)`, [new Date()])
+function findAllUpcomingAndOngoingEvents( maxDate ) {
+  return db.any(`SELECT * FROM events WHERE start_date >= CURRENT_TIMESTAMP
+                 AND start_date <= $1`, [maxDate]);
 }
 
 module.exports = {

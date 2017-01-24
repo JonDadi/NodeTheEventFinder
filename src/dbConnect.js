@@ -3,8 +3,27 @@ const db = pgp('postgres://postgres:gusti@localhost:5432/TheEventFinder');
 
 //Create the tables!
 function createTables(){
+
+  // Users table created.
+  db.none(`CREATE TABLE IF NOT EXISTS users(
+            id                  SERIAL PRIMARY KEY,
+            age                 integer,
+            name                varchar(65),
+            email               varchar(65),
+            fb_id               varchar(255),
+            gender              varchar(10),
+            createdEvents       integer[],
+            attendedEvents      integer[]
+          )`)
+  .then( () => {
+    console.log("Users table created!");
+  })
+  .catch( (error) => {
+    console.log("Failed to create Users table!", error)
+  })
+
   // Events table created.
-  db.none(`CREATE TABLE IF NOT EXISTS event(
+  db.none(`CREATE TABLE IF NOT EXISTS events(
             id                  SERIAL PRIMARY KEY,
             age_max             integer,
             age_min             integer,
@@ -25,23 +44,7 @@ function createTables(){
     console.log("Failed to create events table!", error)
   })
 
-  // Users table created.
-  db.none(`CREATE TABLE IF NOT EXISTS user(
-            id                  SERIAL PRIMARY KEY,
-            age                 integer,
-            name                varchar(65),
-            email               varchar(65),
-            fb_id               varchar(255),
-            gender              varchar(10),
-            createdEvents       integer[],
-            attendedEvents      integer[]
-          )`)
-  .then( () => {
-    console.log("Users table created!");
-  })
-  .catch( (error) => {
-    console.log("Failed to create Users table!", error)
-  })
+
 }
 
 module.exports = {

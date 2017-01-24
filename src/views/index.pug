@@ -3,5 +3,14 @@ extends layout
 block content
   p wasup
   form(method='POST' action='/createEvent')
-    textarea(name='numbers', cols='35', rows='10')
-    button(type='submit', class='btn btn-primary') Margfalda og finna þætti
+    input(name='eventName', placeholder='eventName')
+    input(name='ageMin', placeholder='ageMin')
+    input(name='ageMax', placeholder='ageMax')
+    input(name='descr', placeholder='descr')
+    input(name='genderRestrict', placeholder='genderRestrict')
+    input(name='lati', placeholder='lati')
+    input(name='long', placeholder='long')
+    input(name='eventName', placeholder='eventName')
+    input(name='startDate', placeholder='startDate')
+    input(name='endDate', placeholder='endDate')
+    button(type='submit') CreateEvent
