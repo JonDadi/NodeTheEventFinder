@@ -26,7 +26,7 @@ function deleteEvent(eventId) {
 * current date appropriately and send it as a parameter to the function instead.
 */
 function findAllUpcomingAndOngoingEvents( maxDate ) {
-  return db.any(`SELECT * FROM events WHERE start_date >= CURRENT_TIMESTAMP
+  return db.any(`SELECT * FROM events WHERE end_date >= CURRENT_TIMESTAMP
                  AND start_date <= $1`, [maxDate]);
 }
 
