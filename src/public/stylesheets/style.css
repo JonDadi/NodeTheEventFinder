@@ -1,43 +1,401 @@
-body {
-  padding-top: 70px;
-  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-a:hover, a:visited, a:link, a:active
-{
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: Gill Sans Ultra;
+    font-weight: bold;
+}
+
+p {
+    font-family: Garamond;
+}
+/* screen overlay when prompt for Login*//*
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
+.loginDiv {
+    width: 300px;
+    height: 200px;
+    line-height: 200px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -150px;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 11;
+}
+*/
+.toggle_createEvent_sideBar_btn {
+    width: 120px;
+    height: 33.33px;
+}
+
+
+#login {
+    background: url('../images/fb_login_button.png') no-repeat;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    width: 202px;
+    height: 42px;
+}
+
+.exbtn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: white;
+    cursor: pointer;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+}
+
+.btnContainer {
+    cursor: pointer;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    background-image: linear-gradient(#637bad, #5872a7);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+    border-color: #29447e #29447e #1a356e;
+    border-radius: 0 0 5px 5px;
+    color: #fff;
+    background-color: #5B74A8;
+}
+
+#logout {
+    background-image: linear-gradient(#637bad, #5872a7);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1), inset 0 1px 0 #8a9cc2;
+    border-color: #29447e #29447e #1a356e;
+    border-bottom-right-radius: 5px;
+    background-color: #4f6696;
+    width: 68px;
+    height: 32px;
+}
+
+.divImg {
+    border-right: 0.3px solid white;
+    border-bottom-left-radius: 5px;
+    width: 32px;
+    height: 32px;
+}
+/*
+#logout img {
+    width: 27.35%;
+    height: 32px;
+}
+
+#logout span {
+    width: 72.65%;
+}
+*/
+
+.rightSide {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rightSide span {
+    width: 10px;
+}
+
+.welcomePage {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    background: url('../images/background_wp.jpg') no-repeat ;
+    background-size: cover;
+}
+
+.welcomePage .wpDiv {
+    padding: 10% 20%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: all 2s ease-in-out;
+}
+
+.wpDiv:hover {
+    transform: scale(0.9);
+}
+
+.welcomePage .wpDiv h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Raleway',sans-serif;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+    width: 100%;
+    padding: 0 0 50px 0;
+}
+
+.welcomePage .wpDiv p {
+    font-size: 18px;
+    width: 80%;
+    text-align: center;
+    padding: 0 0 20px 0;
+    color: white;
+}
+
+.navigationBar {
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3px;
+    border-bottom: 0.5px solid white;
+    border-bottom-width: 5px;
+    border-bottom-color: rgba(255, 171, 15, 1);
+    background-color: #8A3324;
+}
+
+.navigationBar h3{
+    color:white;
+    font-size: 34px;
+}
+.myEventsNavigationBar h3{
+    color:white;
+    font-size: 34px;
+}
+
+.navigationBar a{
     text-decoration: none;
 }
 
-.schedule-item {
-  outline: 1px solid;
-  margin: 0 auto;
-  text-decoration: none;
-  color: black;
+
+div #profilePic {
+    width: 40px;
+    height: 40px;
+    border: 0.1px solid black;
 }
 
-/*.schedule {
-  position: relative;
-}*/
-
-.flex {
-  display: flex;
-  top: 1em;
-  right: 1em;
+.btn {
+    padding: 10px 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: white;
+    background-color: #cb4e4e;
+    border-radius: 0 0 5px 5px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    box-sizing: border-box;
 }
 
-.justify {
-  justify-content: space-around;
+.main {
+    display: flex;
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
 }
 
-.iframe {
-  position: fixed;
-  z-index: 1;
+.hideMe {
+    visibility: hidden;
 }
 
-/*.row {
-  outline: 1px solid;
-}*/
+.showMe {
+    visibility: visible;
+}
 
-/*.col-md-3 {
-  outline: 1px solid;
-}*/
+.lat, .lgt, .creatorId {
+    display: none;
+}
+
+.createEventSideBar {
+    border-left: 0.1px solid #cb4e4e;
+    border-right: 0.1px solid #cb4e4e;
+    border-bottom: 0.1px solid #cb4e4e;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    width: 20%;
+}
+
+.eventInfoSideBar {
+    border-left: 0.1px solid #cb4e4e;
+    border-right: 0.1px solid #cb4e4e;
+    border-bottom: 0.1px solid #cb4e4e;
+    background-color: white;
+    position: absolute;
+    z-index: 10;
+    width: 20%;
+}
+
+.mapContainer {
+    width: 100%;
+    height: 100vh;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+img {
+    height: 150px;
+    width: 150px;
+}
+
+/*CreateEventForm*/
+.createEventForm, .viewEventForm {
+    /*border: 1px solid #c8c8c8;*/
+    padding: 10px;
+}
+
+.createEventForm h3,
+.viewEventForm h3 {
+    padding: 5px 0 5px 0;
+}
+
+.createEventForm input {
+    border-radius: 3px;
+    border: 0.5px solid #c8c8c8;
+    padding: 3px 2px;
+}
+
+.createEventForm textarea {
+    border-radius: 3px;
+    border: 0.5px solid #c8c8c8;
+    resize: none;
+    padding: 3px 2px;
+}
+
+.createEventForm span {
+    color: red;
+}
+
+::-webkit-input-placeholder {
+    font-style: italic;
+}
+:-moz-placeholder {
+    font-style: italic;
+}
+::-moz-placeholder {
+    font-style: italic;
+}
+:-ms-input-placeholder {
+    font-style: italic;
+}
+
+div.error {
+    color: red;
+}
+
+
+/* My events */
+body {
+    background-color: #E0DFDB;
+}
+
+.myEvents_eventInfo{
+    width: 500px;
+    margin-top: 10px;
+    padding: 15px;
+    background-color: #D3D3D3;
+}
+
+.myEvents_text{
+    margin-bottom: 10px;
+}
+
+.myEvents_eventInfo a{
+    padding: 5px 5px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    color: white;
+    background-color: #cb4e4e;
+    border-radius: 0 0 5px 5px;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    outline: none;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.myEventNavigationBar {
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3px;
+    border-bottom: 0.5px solid #c8c8c8;
+    border-bottom-width: 5px;
+    border-bottom-color: rgba(255, 171, 15, 1);
+    background-color: #8A3324;
+}
+
+.myEventNavigationBar h3 {
+    color: white;
+}
+
+.myEventNavigationBar a {
+    text-decoration: none;
+}
+
+.myEvents_wrapper{
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: white;
+}
+
+.myEvents_main{
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-around;
+    padding-top: 2em;
+    flex-direction:column;
+     align-items: center;
+}
+
+.eventInfo {
+    border: 0.1px solid #cb4e4e;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.eventInfo:hover {
+    background-color: rgba(255, 107, 107, 1);
+}
+
+.unUsed {
+    visibility: hidden;
+    width: 55.12px;
+    height: 32.22px;
+}

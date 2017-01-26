@@ -1,5 +1,5 @@
 const pgp = require('pg-promise')();
-const db = pgp('postgres://postgres:gusti@localhost:5432/TheEventFinder');
+const db = pgp('postgres://postgres:dadi@localhost:5432/TheEventFinder');
 
 //Create the tables!
 function createTables(){

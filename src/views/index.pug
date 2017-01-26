@@ -1,18 +1,34 @@
 extends layout
 
 block content
-  p wasup
-  form(method='POST' action='/createEvent')
-    input(name='eventName', placeholder='eventName')
-    input(name='ageMin', placeholder='ageMin')
-    input(name='ageMax', placeholder='ageMax')
-    input(name='descr', placeholder='descr')
-    input(name='genderRestrict', placeholder='genderRestrict')
-    input(name='lati', placeholder='lati')
-    input(name='long', placeholder='long')
-    input(name='eventName', placeholder='eventName')
-    input(name='startDate', placeholder='startDate')
-    input(name='endDate', placeholder='endDate')
-    button(type='submit') CreateEvent
-    if user
-      p=user.displayName
+  div.wrapper
+    nav.navigationBar
+      div.leftSide
+        button#toggle_createEvent_sideBar_btn Create Event
+        a(class='btn', id="myEventsBtn", href="") My Events
+      h3='The Event Finder'
+      div.rightSide
+        img#profilePic
+        span
+        div.btnContainer
+          img.divImg
+          button.exBtn(id='logout', type='button') Logout
+    div.main
+      div.createEventSideBar
+        form(method='POST' action='/createEvent')
+        input(name='eventName', placeholder='eventName')
+        input(name='ageMin', placeholder='ageMin')
+        input(name='ageMax', placeholder='ageMax')
+        input(name='descr', placeholder='descr')
+        input(name='genderRestrict', placeholder='genderRestrict')
+        input#lat(name='lati', placeholder='lati')
+        input#lgt(name='long', placeholder='long')
+        input(name='eventName', placeholder='eventName')
+        input(name='startDate', placeholder='startDate')
+        input(name='endDate', placeholder='endDate')
+        button(type='submit') CreateEvent
+      div.mapContainer
+        div#map
+      div#eventInfoSideBar
+  script(async, defer, src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDw_tl_1b0d4i3KviPUzVHvM7sFbmAz-RE&callback=initMap&libraries=places')
+  script(src="/javascripts/main.js")

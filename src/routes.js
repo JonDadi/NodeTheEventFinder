@@ -42,14 +42,17 @@ router.get('/', (req, res, next) => {
   if(req.user){
     userContr.findUserIdByString(req.user.id)
     .then( data => {
-
-       console.log('user already exists');
-       res.render('index', {user: req.user});
-
+       if(data){
+         console.log('user already exists');
+         res.render('index', {user: req.user});
+       }
+       else{
+         userContr.saveUser(req.user);
+         res.render('index', {user:req.user});
+       }
     })
     .catch( error => {
-        userContr.saveUser(req.user);
-        res.render('index', {user:req.user});
+        console.log(error);
     });
   }
   else{

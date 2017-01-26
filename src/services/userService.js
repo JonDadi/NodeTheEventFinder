@@ -19,7 +19,7 @@ function findUserByString(id) {
 }
 
 function findUserIdByString(id) {
-  return db.one(`SELECT id FROM users WHERE fb_id = $1`, [id]);
+  return db.any(`SELECT id FROM users WHERE fb_id = $1`, [id]);
 }
 
 module.exports = {
