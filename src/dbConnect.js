@@ -48,5 +48,6 @@ function createTables(){
 }
 
 module.exports = {
-    createTables
-  };
+  db,
+  createTables
+};

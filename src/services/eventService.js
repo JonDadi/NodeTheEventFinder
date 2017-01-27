@@ -1,5 +1,5 @@
-const pgp = require('pg-promise')();
-const db = pgp('postgres://postgres:dadi@localhost:5432/TheEventFinder');
+const dbConnect = require('../dbConnect');
+const db = dbConnect.db;
 
 // Might be able to do this more efficiently, by serializing param somehow,
 // like Spring does it..
