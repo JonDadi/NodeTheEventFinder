@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div.wrapper
+    nav.navigationBar
+      div.leftSide
+        a(class='btn', href="/") Back
+      h3='The Event Finder'
+      div.rightSide
+        img#profilePic
+        span
+        div.btnContainer
+          img.divImg
+          button.exBtn(id='logout', type='button') Logout
+    div.main
+      div.eventsContainer
+        h1='This is '+user.displayName+' events page!'
+        each event in events
+          div.attendingEvent
+            p='You created this event'
+            p=event.name
+            p=event.description

@@ -5,7 +5,7 @@ block content
     nav.navigationBar
       div.leftSide
         button#toggle_createEvent_sideBar_btn Create Event
-        a(class='btn', id="myEventsBtn", href="") My Events
+        a(class='btn', id="myEventsBtn", href="/myEvents/") My Events
       h3='The Event Finder'
       div.rightSide
         img#profilePic
@@ -16,19 +16,30 @@ block content
     div.main
       div.createEventSideBar
         form(method='POST' action='/createEvent')
-        input(name='eventName', placeholder='eventName')
-        input(name='ageMin', placeholder='ageMin')
-        input(name='ageMax', placeholder='ageMax')
-        input(name='descr', placeholder='descr')
-        input(name='genderRestrict', placeholder='genderRestrict')
-        input#lat(name='lati', placeholder='lati')
-        input#lgt(name='long', placeholder='long')
-        input(name='eventName', placeholder='eventName')
-        input(name='startDate', placeholder='startDate')
-        input(name='endDate', placeholder='endDate')
-        button(type='submit') CreateEvent
+          input(name='eventName', placeholder='eventName')
+          input(name='ageMin', placeholder='ageMin')
+          input(name='ageMax', placeholder='ageMax')
+          input(name='descr', placeholder='descr')
+          input(name='genderRestrict', placeholder='genderRestrict')
+          input#lat(name='lati', placeholder='lati')
+          input#lgt(name='long', placeholder='long')
+          input(name='startDate', placeholder='startDate')
+          input(name='endDate', placeholder='endDate')
+          button(type='submit') CreateEvent
       div.mapContainer
         div#map
-      div#eventInfoSideBar
+      div.eventInfoSideBar
+        p='Event name:'
+        p(id="eventName")
+        p='Event description:'
+        p(id="eventDescr")
+        p='Max age:'
+        p(id="maxAge")
+        p='Min age:'
+        p(id="minAge")
+        p='Event start time:'
+        p(id="startTime")
+        p='Gender restriction:'
+        p(id="genderRestrict")
   script(async, defer, src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDw_tl_1b0d4i3KviPUzVHvM7sFbmAz-RE&callback=initMap&libraries=places')
   script(src="/javascripts/main.js")

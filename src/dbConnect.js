@@ -11,9 +11,7 @@ function createTables(){
             name                varchar(65),
             email               varchar(65),
             fb_id               varchar(255),
-            gender              varchar(10),
-            createdEvents       integer[],
-            attendedEvents      integer[]
+            gender              varchar(10)
           )`)
   .then( () => {
     console.log("Users table created!");
@@ -34,14 +32,27 @@ function createTables(){
             gender_restriction  boolean,
             lat                 real,
             lgt                 real,
-            name                varChar(32),
-            attendees           integer[]
+            name                varChar(32)
             )`)
   .then( () => {
     console.log("events table created!");
   })
   .catch( (error) => {
     console.log("Failed to create events table!", error)
+  })
+
+  // userAttendingEvent table created.
+  db.none(`CREATE TABLE IF NOT EXISTS userAttendingEvent(
+            id                  SERIAL PRIMARY KEY,
+            userId              int,
+            eventId             int,
+            isCreator           boolean
+            )`)
+  .then( () => {
+    console.log("userAttendingEvent table created!");
+  })
+  .catch( (error) => {
+    console.log("Failed to create userAttendingEvent table!", error)
   })
 
 

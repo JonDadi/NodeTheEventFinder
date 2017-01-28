@@ -5,11 +5,19 @@ const db = dbConnect.db;
 // like Spring does it..
 function createEvent(ageMax, ageMin, creatorId, descr, endDate, startDate,
                         genderRestrict, lati, long, eventName, eAttendees) {
-  db.none(`INSERT INTO events(age_max, age_min, creator_id, description,
-            end_date, start_date, gender_restriction, lat, lgt, name, attendees)
-           VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`,
-           [ageMax, ageMin, creatorId, descr, endDate, startDate,
-            genderRestrict, lati, long, eventName, eAttendees]);
+  return db.one(`INSERT INTO events(age_max, age_min, creator_id, description,
+            end_date, start_date, gender_restriction, lat, lgt, name)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
+            [ageMax, ageMin, creatorId, descr, endDate, startDate,
+            genderRestrict, lati, long, eventName]);
+}
+
+// Might be able to do this more efficiently, by serializing param somehow,
+// like Spring does it..
+function attendEvent(userId, eventId, isCreator) {
+  db.none(`INSERT INTO userAttendingEvent(userId, eventId, isCreator)
+           VALUES($1, $2, $3)`,
+           [userId, eventId, isCreator]);
 }
 
 function getEvent(eventId) {
@@ -18,6 +26,21 @@ function getEvent(eventId) {
 
 function deleteEvent(eventId) {
   db.none(`DELETE FROM events WHERE id = $1`, [eventId]);
+}
+
+function getEventsAttendedByUser( userId ){
+  return db.any(`SELECT * FROM userAttendingEvent, events WHERE
+                userAttendingEvent.userId = $1`, [userId]);
+}
+
+function getAllEventsByUser( userId ){
+
+
+}
+
+function getAllAttendees( eventId ){
+
+
 }
 
 /*
@@ -34,5 +57,9 @@ module.exports = {
     createEvent,
     getEvent,
     deleteEvent,
-    findAllUpcomingAndOngoingEvents
+    findAllUpcomingAndOngoingEvents,
+    attendEvent,
+    getAllEventsByUser,
+    getAllAttendees,
+    getEventsAttendedByUser,
   };

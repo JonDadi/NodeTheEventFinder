@@ -170,6 +170,7 @@ p {
 .navigationBar {
     display: flex;
     height: 60px;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
     padding: 0 3px;
@@ -177,6 +178,10 @@ p {
     border-bottom-width: 5px;
     border-bottom-color: rgba(255, 171, 15, 1);
     background-color: #8A3324;
+    position: fixed;
+    top:0;
+    z-index: 100;
+
 }
 
 .navigationBar h3{
@@ -220,6 +225,7 @@ div #profilePic {
     position: relative;
     width: 100%;
     margin: 0 auto;
+    top:60px;
 }
 
 .hideMe {
@@ -239,9 +245,10 @@ div #profilePic {
     border-right: 0.1px solid #cb4e4e;
     border-bottom: 0.1px solid #cb4e4e;
     background-color: white;
-    position: absolute;
+    position: absolute;;
     z-index: 10;
     width: 20%;
+    top: 60px;
 }
 
 .eventInfoSideBar {
@@ -252,6 +259,8 @@ div #profilePic {
     position: absolute;
     z-index: 10;
     width: 20%;
+    right: 0px;
+    top: 60px;
 }
 
 .mapContainer {

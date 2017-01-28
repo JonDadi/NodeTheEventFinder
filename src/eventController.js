@@ -2,12 +2,15 @@ const eventServ = require('./services/eventService');
 
 
 function saveEvent( eventInfo ){
-    // Add make the creator attend the event.
-    let attendees = [eventInfo.creatorId];
-
     eventServ.createEvent(eventInfo.ageMax, eventInfo.ageMin, eventInfo.creatorId, eventInfo.descr,
                           eventInfo.endDate, eventInfo.startDate, eventInfo.genderRestrict,
-                          eventInfo.lati, eventInfo.long, eventInfo.eventName, attendees);
+                          eventInfo.lati, eventInfo.long, eventInfo.eventName)
+    .then( eventId => {
+        eventServ.attendEvent(  eventInfo.creatorId, eventId.id, true);
+    })
+    .catch( error => {
+        console.log('Error creating event'+error);
+    });
 }
 
 function getAllEvents( maxDate ) {
@@ -17,8 +20,14 @@ function getAllEvents( maxDate ) {
   return eventServ.findAllUpcomingAndOngoingEvents( maxDate );
 }
 
+function getEventsAttendedByUser( userId ) {
+  return eventServ.getEventsAttendedByUser( userId );
+}
+
+
 
 module.exports = {
     saveEvent,
     getAllEvents,
+    getEventsAttendedByUser,
   };

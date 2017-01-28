@@ -60,6 +60,18 @@ router.get('/', (req, res, next) => {
   }
 });
 
+
+router.get('/myEvents', (req, res, next) => {
+  eventContr.getEventsAttendedByUser( 1 )
+  .then( data => {
+    console.log(data);
+    res.render('myEvents', {events: data, user: req.user});
+  })
+  .catch( error => {
+    console.log('error fetching events by user ' + error);
+  });
+});
+
 router.get('/login', (req, res, next) => {
   res.render('login');
 });
