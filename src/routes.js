@@ -10,7 +10,7 @@ passport.use(new strategy({
   clientID: '1173059556143995',
   clientSecret: 'e98236e4c6c585aa2829a3848ffb1a26',
   callbackURL: 'http://localhost:3000/login/facebook/return',
-   profileFields: ['id', 'age_range', 'displayName', 'gender', 'email'],
+  profileFields: ['id', 'age_range', 'displayName', 'gender', 'emails'],
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
@@ -77,7 +77,7 @@ router.get('/login', (req, res, next) => {
   res.render('login');
 });
 
-router.get('/login/facebook', passport.authenticate('facebook'));
+router.get('/login/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 router.get('/login/facebook/return', passport.authenticate('facebook', {failureRedirect: '/login'}), (req, res, next) => {
    res.redirect('/');

@@ -7,7 +7,7 @@ function findUserIdByString( fbId ){
 
 function saveUser( user ){
 
-  userServ.createUser(18, user.displayName, user.email, user.id, user.gender);
+  userServ.createUser(18, user.displayName, user.emails[0].value, user.id, user.gender);
 }
 module.exports = {
     saveUser,
