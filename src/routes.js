@@ -9,7 +9,8 @@ const userContr = require('./userController');
 passport.use(new strategy({
   clientID: '1173059556143995',
   clientSecret: 'e98236e4c6c585aa2829a3848ffb1a26',
-  callbackURL: 'http://localhost:3000/login/facebook/return'
+  callbackURL: 'http://localhost:3000/login/facebook/return',
+   profileFields: ['id', 'age_range', 'displayName', 'gender', 'email'],
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user

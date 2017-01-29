@@ -6,8 +6,8 @@ function findUserIdByString( fbId ){
 }
 
 function saveUser( user ){
-  
-  userServ.createUser(18, user.displayName, user.email, user.id, 'redda gend', null, null);
+
+  userServ.createUser(18, user.displayName, user.email, user.id, user.gender);
 }
 module.exports = {
     saveUser,

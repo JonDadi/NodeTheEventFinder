@@ -1,5 +1,4 @@
-const dbConnect = require('../dbConnect');
-const db = dbConnect.db;
+const db = require('../dbConnect').db;
 
 // Might be able to do this more efficiently, by serializing param somehow,
 // like Spring does it..

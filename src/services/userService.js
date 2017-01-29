@@ -1,10 +1,9 @@
-const dbConnect = require('../dbConnect');
-const db = dbConnect.db;
+const db = require('../dbConnect').db;
 
-function createUser(uAge, uName, uEmail, uFbId, uGender, uCreatedEvents, uAttendedEvents) {
-  db.none(`INSERT INTO users(age, name, email, fb_id, gender, createdEvents, attendedEvents)
-           VALUES($1, $2, $3, $4, $5, $6, $7)`,
-           [uAge, uName, uEmail, uFbId, uGender, uCreatedEvents, uAttendedEvents])
+function createUser(uAge, uName, uEmail, uFbId, uGender) {
+  db.none(`INSERT INTO users(age, name, email, fb_id, gender)
+           VALUES($1, $2, $3, $4, $5)`,
+           [uAge, uName, uEmail, uFbId, uGender])
   .then(() => {
     console.log("User created");
   })

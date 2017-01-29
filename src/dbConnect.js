@@ -21,6 +21,7 @@ function createTables(){
   })
 
   // Events table created.
+  // timestamp is of the format: yyyy-mm-dd hh:mm
   db.none(`CREATE TABLE IF NOT EXISTS events(
             id                  SERIAL PRIMARY KEY,
             age_max             integer,
