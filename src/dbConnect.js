@@ -11,7 +11,8 @@ function createTables(){
             name                varchar(65),
             email               varchar(65),
             fb_id               varchar(255),
-            gender              varchar(10)
+            gender              varchar(10),
+            regDate             varchar(64)
           )`)
   .then( () => {
     console.log("Users table created!");

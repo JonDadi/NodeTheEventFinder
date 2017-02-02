@@ -1,18 +1,15 @@
 const db = require('../dbConnect').db;
 
-// Might be able to do this more efficiently, by serializing param somehow,
-// like Spring does it..
-function createEvent(ageMax, ageMin, creatorId, descr, endDate, startDate,
-                        genderRestrict, lati, long, eventName, eAttendees) {
+function createEvent(eventInfo) {
   return db.one(`INSERT INTO events(age_max, age_min, creator_id, description,
             end_date, start_date, gender_restriction, lat, lgt, name)
             VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
-            [ageMax, ageMin, creatorId, descr, endDate, startDate,
-            genderRestrict, lati, long, eventName]);
+            [eventInfo.ageMax, eventInfo.ageMin, eventInfo.creatorId,
+              eventInfo.descr, eventInfo.endDate, eventInfo.startDate,
+              eventInfo.genderRestrict, eventInfo.lati, eventInfo.long,
+              eventInfo.eventName]);
 }
 
-// Might be able to do this more efficiently, by serializing param somehow,
-// like Spring does it..
 function attendEvent(userId, eventId, isCreator) {
   db.none(`INSERT INTO userAttendingEvent(userId, eventId, isCreator)
            VALUES($1, $2, $3)`,
@@ -28,13 +25,19 @@ function deleteEvent(eventId) {
 }
 
 function getEventsAttendedByUser( userId ){
+  // This one needs to be written again. It's joining tables without grouping
+  // resulting in a lot of duplicates.
   return db.any(`SELECT * FROM userAttendingEvent, events WHERE
                 userAttendingEvent.userId = $1`, [userId]);
 }
 
-function getAllEventsByUser( userId ){
-
-
+function getEventsCreatedByUser( userId ){
+  return db.any(`SELECT events.name, description
+                  FROM events, (SELECT eventid
+                  			  FROM userAttendingEvent
+                  			  WHERE userid = $1
+                          AND iscreator = true) as u
+                  WHERE events.id = u.eventid`, [userId]);
 }
 
 function getAllAttendees( eventId ){
@@ -58,7 +61,7 @@ module.exports = {
     deleteEvent,
     findAllUpcomingAndOngoingEvents,
     attendEvent,
-    getAllEventsByUser,
+    getEventsCreatedByUser,
     getAllAttendees,
     getEventsAttendedByUser,
   };

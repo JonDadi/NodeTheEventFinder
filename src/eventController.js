@@ -2,9 +2,7 @@ const eventServ = require('./services/eventService');
 
 
 function saveEvent( eventInfo ){
-    eventServ.createEvent(eventInfo.ageMax, eventInfo.ageMin, eventInfo.creatorId, eventInfo.descr,
-                          eventInfo.endDate, eventInfo.startDate, eventInfo.genderRestrict,
-                          eventInfo.lati, eventInfo.long, eventInfo.eventName)
+    eventServ.createEvent(eventInfo)
     .then( eventId => {
         eventServ.attendEvent(  eventInfo.creatorId, eventId.id, true);
     })
@@ -24,10 +22,13 @@ function getEventsAttendedByUser( userId ) {
   return eventServ.getEventsAttendedByUser( userId );
 }
 
-
+function getEventsCreatedByUser( userId ) {
+  return eventServ.getEventsCreatedByUser( userId );
+}
 
 module.exports = {
     saveEvent,
     getAllEvents,
     getEventsAttendedByUser,
+    getEventsCreatedByUser
   };

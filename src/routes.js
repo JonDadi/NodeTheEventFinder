@@ -63,13 +63,18 @@ router.get('/', (req, res, next) => {
 
 
 router.get('/myEvents', (req, res, next) => {
-  eventContr.getEventsAttendedByUser( 1 )
+  userContr.findUserIdByString(req.user.id)
   .then( data => {
-    console.log(data);
-    res.render('myEvents', {events: data, user: req.user});
+    eventContr.getEventsCreatedByUser( data[0].id )
+    .then( data2 => {
+      res.render('myEvents', {events: data2, user: req.user});
+    })
+    .catch( error => {
+      console.log('error fetching events by user ' + error);
+    });
   })
   .catch( error => {
-    console.log('error fetching events by user ' + error);
+    console.log('error fetching user ID ' + error);
   });
 });
 
