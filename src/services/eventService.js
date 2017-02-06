@@ -25,10 +25,11 @@ function deleteEvent(eventId) {
 }
 
 function getEventsAttendedByUser( userId ){
-  // This one needs to be written again. It's joining tables without grouping
-  // resulting in a lot of duplicates.
-  return db.any(`SELECT * FROM userAttendingEvent, events WHERE
-                userAttendingEvent.userId = $1`, [userId]);
+  return db.any(`SELECT *
+                 FROM events, (SELECT eventId
+                               FROM userAttendingEvent
+                               WHERE userid = $1) as u
+                 WHERE events.id = u.eventId`, [userId]);
 }
 
 function getEventsCreatedByUser( userId ){
@@ -41,8 +42,11 @@ function getEventsCreatedByUser( userId ){
 }
 
 function getAllAttendees( eventId ){
-
-
+  return db.any(`SELECT users.name
+                 FROM users, (SELECT userid
+                              FROM userAttendingEvent
+                              WHERE eventid = $1) as u
+                 WHERE users.id = u.userid`, [eventId]);
 }
 
 /*
