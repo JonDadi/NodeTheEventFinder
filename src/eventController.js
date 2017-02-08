@@ -22,13 +22,23 @@ function getEventsAttendedByUser( userId ) {
   return eventServ.getEventsAttendedByUser( userId );
 }
 
+function getAttendees( eventId ){
+  return eventServ.getAllAttendees(eventId);
+}
+
 function getEventsCreatedByUser( userId ) {
   return eventServ.getEventsCreatedByUser( userId );
+}
+
+function attendEvent( userId, eventId ) {
+   eventServ.attendEvent( userId, eventId, false);
 }
 
 module.exports = {
     saveEvent,
     getAllEvents,
     getEventsAttendedByUser,
-    getEventsCreatedByUser
+    getEventsCreatedByUser,
+    getAttendees,
+    attendEvent,
   };

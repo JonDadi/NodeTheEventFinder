@@ -12,6 +12,9 @@ const eventInfoElements = { eventName: document.getElementById('eventName'),
                             minAge: document.getElementById('minAge'),
                             startTime: document.getElementById('startTime'),
                             genderRestrict: document.getElementById('genderRestrict')};
+const eventInfoBox = document.getElementsByClassName("eventInfoSideBar");
+const attendeeContainer = document.getElementById('attendees');
+const attendBtnContainer = document.getElementById('attendBtnContainer');
 
 const createEventSideBar = document.getElementsByClassName('createEventSideBar')[0];
 createEventSideBar.style.display = 'none';
@@ -45,7 +48,8 @@ function addEventsToMap( events ){
       map: map
     });
     marker.addListener('click', () => {
-      console.log(data);
+      // Delete the previous button
+      attendBtnContainer.innerHTML = "";
       map.panTo(marker.getPosition());
       //Update and show event info bar.
       eventInfoElements.eventName.innerHTML = data.name;
@@ -54,9 +58,49 @@ function addEventsToMap( events ){
       eventInfoElements.minAge.innerHTML = data.age_min;
       eventInfoElements.startTime.innerHTML = data.start_date;
       eventInfoElements.genderRestrict.innerHTML = data.gender_restriction;
+      // Create the attend button
+      const btn = document.createElement("button");
+      const btnText = document.createTextNode("Attend");
+      btn.appendChild(btnText);
+      btn.addEventListener('click', () => {
+        $.ajax({
+            url: 'http://localhost:3000/attendEvent/'+data.id,
+            type: 'get',
+            success:  successData => {
+                if(successData){
+                  updateAttendeeList( data.id, btn );
+                }
+            }
+          });
+      })
+      attendBtnContainer.appendChild(btn);
+      // Update the attendeeList
+      updateAttendeeList(data.id, btn);
     })
     currentEventMarkers.push(marker);
   });
+}
+
+function updateAttendeeList( eventId, btn ){
+  // Clear possible old attendees
+  attendeeContainer.innerHTML = "";
+  // Fetch all attendees for this event
+  $.ajax({
+    url: 'http://localhost:3000/getAttendees/'+eventId,
+    type: 'get',
+    success: attendeeData => {
+      // Disable the attending button if user is already attending.
+      if(attendeeData.isAttending){
+        btn.disabled = true;
+      }
+      $.each(attendeeData.attendees, (key, attendee) => {
+        const attendeeItem = document.createElement('p');
+        const attendeeName = document.createTextNode(attendee.name);
+        attendeeItem.appendChild(attendeeName);
+        attendeeContainer.appendChild(attendeeItem);
+      });
+    }
+  })
 }
 
 function toggleCreateEventBar(){

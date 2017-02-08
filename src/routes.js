@@ -107,6 +107,39 @@ router.post('/createEvent', (req, res, next) => {
     res.render('index');
 });
 
+router.get('/getAttendees/:eventId', (req, res, next) => {
+  const eventId = req.params.eventId;
+  eventContr.getAttendees( eventId )
+  .then(data => {
+    let attending = false;
+    for(attendee in data){
+      if(data[attendee].name === req.user.displayName){
+        attending = true;
+      }
+    }
+    res.json({attendees: data,
+              isAttending: attending});
+  })
+  .catch( error => {
+    console.log(error);
+  });
+});
+
+router.get('/attendEvent/:eventId', (req, res, next) => {
+  const eventId = req.params.eventId
+  userContr.findUserIdByString(req.user.id)
+  .then( data => {
+    eventContr.attendEvent( data[0].id, eventId );
+    res.json('true');
+  })
+  .catch( error => {
+    console.log(error);
+    res.json('false');
+  })
+});
+
+
+
 router.get('/getAllEvents/:maxDate', (req, res, next) => {
   // How many days in the future do we want to see?
 
