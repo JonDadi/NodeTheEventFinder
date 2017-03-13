@@ -91,6 +91,7 @@ router.get('/login/facebook/return', passport.authenticate('facebook', {failureR
 
 router.post('/createEvent', (req, res, next) => {
   const data = req.body;
+  const isFromAndroid = data.isAndroid;
   let dummyEvent = {'ageMin': data.ageMin,
                     'ageMax': data.ageMax,
                     'creatorId': 1,
@@ -102,9 +103,15 @@ router.post('/createEvent', (req, res, next) => {
                     'long': data.long,
                     'eventName': data.eventName
                   }
-
+    console.log(dummyEvent);
+    console.log('android:'+isFromAndroid);
     eventContr.saveEvent( dummyEvent );
-    res.render('index');
+    if(isFromAndroid === 'true') {
+      res.json(true)
+    } else {
+      res.render('index');
+    }
+
 });
 
 router.get('/getAttendees/:eventId', (req, res, next) => {
