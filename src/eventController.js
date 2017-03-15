@@ -18,6 +18,11 @@ function getAllEvents( maxDate ) {
   return eventServ.findAllUpcomingAndOngoingEvents( maxDate );
 }
 
+function getEventsFromTo( from, to ) {
+
+  return eventServ.getEventsFromTo( from, to );
+}
+
 function getEventsAttendedByUser( userId ) {
   return eventServ.getEventsAttendedByUser( userId );
 }
@@ -37,6 +42,7 @@ function attendEvent( userId, eventId ) {
 module.exports = {
     saveEvent,
     getAllEvents,
+    getEventsFromTo,
     getEventsAttendedByUser,
     getEventsCreatedByUser,
     getAttendees,

@@ -59,11 +59,18 @@ function findAllUpcomingAndOngoingEvents( maxDate ) {
                  AND start_date <= $1`, [maxDate]);
 }
 
+
+function getEventsFromTo( from, to ) {
+  return db.any(`SELECT * FROM events WHERE end_date >= $1
+                 AND start_date <= $2`, [from, to]);
+}
+
 module.exports = {
     createEvent,
     getEvent,
     deleteEvent,
     findAllUpcomingAndOngoingEvents,
+    getEventsFromTo,
     attendEvent,
     getEventsCreatedByUser,
     getAllAttendees,

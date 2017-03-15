@@ -161,4 +161,18 @@ router.get('/getAllEvents/:maxDate', (req, res, next) => {
     });
 });
 
+router.get('/getEventsFromTo/:from/:to', (req, res, next) => {
+
+  const from = req.params.from;
+  const to = req.params.to;
+
+    eventContr.getEventsFromTo(from, to)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
 module.exports = router;
