@@ -114,6 +114,32 @@ router.post('/createEvent', (req, res, next) => {
 
 });
 
+router.post('/check', (req, res, next) => {
+  const data = req.body;
+  const isFromAndroid = data.isAndroid;
+  let dummyEvent = {'uid': data.uid,
+					'userName': data.userName
+                  }
+    console.log(dummyEvent);
+	console.log(dummyEvent.uid);
+    console.log('android:'+isFromAndroid);
+	
+	
+	const user = userContr.findFB_id(dummyEvent.uid);
+	user.then(function(result) {
+		if(isFromAndroid === 'true') {
+			if(result[0].fb_id == dummyEvent.uid) {
+				res.json(true);
+			} else {
+				res.json(false);
+			}
+		}
+	}).catch(function(error) {
+		throw new Error('fb_id not exists');
+	});
+	
+});
+
 router.get('/getAttendees/:eventId', (req, res, next) => {
   const eventId = req.params.eventId;
   eventContr.getAttendees( eventId )

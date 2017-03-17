@@ -24,9 +24,14 @@ function findUserIdByString(id) {
   return db.any(`SELECT id FROM users WHERE fb_id = $1`, [id]);
 }
 
+function findFB_id(uid) {
+	return db.any(`SELECT fb_id FROM users WHERE fb_id = $1`, [uid]);
+}
+
 module.exports = {
     createUser,
     getAllUsers,
     findUserByString,
-    findUserIdByString
+    findUserIdByString,
+	findFB_id,
   };
