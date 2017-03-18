@@ -116,28 +116,31 @@ router.post('/createEvent', (req, res, next) => {
 
 router.post('/check', (req, res, next) => {
   const data = req.body;
-  const isFromAndroid = data.isAndroid;
-  let dummyEvent = {'uid': data.uid,
-					'userName': data.userName
-                  }
-    console.log(dummyEvent);
-	console.log(dummyEvent.uid);
-    console.log('android:'+isFromAndroid);
-	
-	
-	const user = userContr.findFB_id(dummyEvent.uid);
-	user.then(function(result) {
-		if(isFromAndroid === 'true') {
-			if(result[0].fb_id == dummyEvent.uid) {
-				res.json(true);
-			} else {
-				res.json(false);
-			}
-		}
-	}).catch(function(error) {
-		throw new Error('fb_id not exists');
+  let dummyUser = {
+    id: '11',
+		displayName: 'Jólasveinn',
+    gender: 'male',
+    emails: [
+      {value: 'santa@santa.is'}
+    ],
+    regDate: '2017-03-18 20:05:00'
+  }
+
+  // if the user exists we return true over to Android client.
+  // if user doesn't exists, we create one in our db and return false to Android client.
+	userContr.findFB_id(dummyUser.id)
+	.then((result) => {
+    if (result.length > 0) {
+      console.log("User already exists");
+      res.json(true);
+    } else {
+      userContr.saveUser(dummyUser);
+      res.json(false);
+    }
+	}).catch((error) => {
+		console.log("Error in routes.js -> userContr.findFB_id(dummyUser.id): " + error);
 	});
-	
+
 });
 
 router.get('/getAttendees/:eventId', (req, res, next) => {
