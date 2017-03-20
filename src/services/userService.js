@@ -1,12 +1,9 @@
 const db = require('../dbConnect').db;
 
 function createUser(uAge, uName, uEmail, uFbId, uGender) {
-  db.none(`INSERT INTO users(age, name, email, fb_id, gender, regDate)
-           VALUES($1, $2, $3, $4, $5, CURRENT_TIMESTAMP)`,
-           [uAge, uName, uEmail, uFbId, uGender])
-  .then(() => {
-    console.log("User created");
-  })
+  return db.one(`INSERT INTO users(age, name, email, fb_id, gender, regDate)
+           VALUES($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id`,
+           [uAge, uName, uEmail, uFbId, uGender]);
 }
 
 // Gets all the values from user table and

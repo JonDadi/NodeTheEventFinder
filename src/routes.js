@@ -116,26 +116,31 @@ router.post('/createEvent', (req, res, next) => {
 
 router.post('/check', (req, res, next) => {
   const data = req.body;
-  let dummyUser = {
-    id: '11',
-		displayName: 'Jólasveinn',
-    gender: 'male',
+  console.log(data);
+  let user = {
+    id: data.fbid,
+		displayName: data.fullName,
+    gender: data.gender,
     emails: [
-      {value: 'santa@santa.is'}
+      {value: data.email}
     ],
-    regDate: '2017-03-18 20:05:00'
   }
+  console.log("inní /check route");
 
   // if the user exists we return true over to Android client.
   // if user doesn't exists, we create one in our db and return false to Android client.
-	userContr.findFB_id(dummyUser.id)
+	userContr.findFB_id(user.id)
 	.then((result) => {
     if (result.length > 0) {
       console.log("User already exists");
-      res.json(true);
+      console.log(result[0].fb_id);
+      res.send("true");
     } else {
-      userContr.saveUser(dummyUser);
-      res.json(false);
+      userContr.saveUser(user)
+      .then(data => {
+        // data.id is the id of the user in the db
+        res.json(data.id);
+      })
     }
 	}).catch((error) => {
 		console.log("Error in routes.js -> userContr.findFB_id(dummyUser.id): " + error);
@@ -196,6 +201,20 @@ router.get('/getEventsFromTo/:from/:to', (req, res, next) => {
   const to = req.params.to;
 
     eventContr.getEventsFromTo(from, to)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+router.get('/getHostedEvents/:id', (req, res, next) => {
+
+  const from = req.params.from;
+  const to = req.params.to;
+
+    eventContr.getEventsCreatedByUser(id)
     .then(data => {
       res.json(data);
     })
