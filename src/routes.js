@@ -91,10 +91,11 @@ router.get('/login/facebook/return', passport.authenticate('facebook', {failureR
 
 router.post('/createEvent', (req, res, next) => {
   const data = req.body;
+
   const isFromAndroid = data.isAndroid;
-  let dummyEvent = {'ageMin': data.ageMin,
+  let event = {'ageMin': data.ageMin,
                     'ageMax': data.ageMax,
-                    'creatorId': 1,
+                    'creatorId': parseInt(data.db_id),
                     'descr': data.descr,
                     'endDate': data.endDate,
                     'startDate': data.startDate,
@@ -103,9 +104,8 @@ router.post('/createEvent', (req, res, next) => {
                     'long': data.long,
                     'eventName': data.eventName
                   }
-    console.log(dummyEvent);
-    console.log('android:'+isFromAndroid);
-    eventContr.saveEvent( dummyEvent );
+
+    eventContr.saveEvent( event );
     if(isFromAndroid === 'true') {
       res.json(true)
     } else {
@@ -134,7 +134,8 @@ router.post('/check', (req, res, next) => {
     if (result.length > 0) {
       console.log("User already exists");
       console.log(result[0].fb_id);
-      res.send("true");
+
+      res.json(true);
     } else {
       userContr.saveUser(user)
       .then(data => {
