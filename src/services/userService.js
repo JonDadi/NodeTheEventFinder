@@ -22,7 +22,7 @@ function findUserIdByString(id) {
 }
 
 function findFB_id(uid) {
-	return db.any(`SELECT fb_id FROM users WHERE fb_id = $1`, [uid]);
+	return db.any(`SELECT * FROM users WHERE fb_id = $1`, [uid]);
 }
 
 module.exports = {

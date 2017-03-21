@@ -133,9 +133,9 @@ router.post('/check', (req, res, next) => {
 	.then((result) => {
     if (result.length > 0) {
       console.log("User already exists");
-      console.log(result[0].fb_id);
-
-      res.json(true);
+      console.log(result[0].id);
+      // result[0].id is the id of the user in the db
+      res.json(result[0].id);
     } else {
       userContr.saveUser(user)
       .then(data => {
@@ -144,7 +144,7 @@ router.post('/check', (req, res, next) => {
       })
     }
 	}).catch((error) => {
-		console.log("Error in routes.js -> userContr.findFB_id(dummyUser.id): " + error);
+		console.log("Error in routes.js -> userContr.findFB_id(user.id): " + error);
 	});
 
 });
@@ -227,8 +227,8 @@ router.get('/getEventsFromTo/:from/:to', (req, res, next) => {
 
 router.get('/getHostedEvents/:id', (req, res, next) => {
 
-  const from = req.params.from;
-  const to = req.params.to;
+  const id = parseInt(req.params.id);
+  console.log("inní server og id er: "+id);
 
     eventContr.getEventsCreatedByUser(id)
     .then(data => {
