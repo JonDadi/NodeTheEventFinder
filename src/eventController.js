@@ -19,7 +19,6 @@ function getAllEvents( maxDate ) {
 }
 
 function getEventsFromTo( from, to ) {
-
   return eventServ.getEventsFromTo( from, to );
 }
 
@@ -39,7 +38,12 @@ function attendEvent( userId, eventId ) {
    eventServ.attendEvent( userId, eventId, false);
 }
 
+function getEvent( eventId ) {
+  return eventServ.getEvent( eventId );
+}
+
 module.exports = {
+    getEvent,
     saveEvent,
     getAllEvents,
     getEventsFromTo,

@@ -180,7 +180,22 @@ router.get('/attendEvent/:eventId', (req, res, next) => {
   })
 });
 
-
+router.get('/getFullEventInfo/:eventId', (req, res) => {
+  const eventId = req.params.eventId;
+  eventContr.getEvent( eventId )
+  .then( eventData => {
+    eventContr.getAttendees( eventId )
+    .then( attendeeData => {
+      eventData.attendees = attendeeData;
+      res.json(eventData);
+    })
+    .catch( error  => {
+      console.log('Error fetching attendees'+error);
+    });
+  }).catch( error => {
+    console.log('Error fetching event data '+error);
+  });
+})
 
 router.get('/getAllEvents/:maxDate', (req, res, next) => {
   // How many days in the future do we want to see?
