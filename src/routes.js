@@ -181,7 +181,7 @@ router.get('/attendEvent/:eventId', (req, res, next) => {
 });
 
 router.get('/getFullEventInfo/:eventId', (req, res) => {
-  const eventId = req.params.eventId;
+  const eventId = parseInt(req.params.eventId);
   eventContr.getEvent( eventId )
   .then( eventData => {
     eventContr.getAttendees( eventId )
