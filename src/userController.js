@@ -11,7 +11,7 @@ function findFB_id(uid) {
 
 function saveUser( user ){
 
-  return userServ.createUser(18, user.displayName, user.emails[0].value, user.id, user.gender);
+  return userServ.createUser(18, user.displayName, user.emails[0].value, user.fbid, user.gender);
 }
 module.exports = {
     saveUser,

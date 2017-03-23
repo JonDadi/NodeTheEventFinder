@@ -118,7 +118,7 @@ router.post('/check', (req, res, next) => {
   const data = req.body;
   console.log(data);
   let user = {
-    id: data.fbid,
+    fbid: data.fbid,
 		displayName: data.fullName,
     gender: data.gender,
     emails: [
@@ -127,9 +127,9 @@ router.post('/check', (req, res, next) => {
   }
   console.log("inní /check route");
 
-  // if the user exists we return true over to Android client.
-  // if user doesn't exists, we create one in our db and return false to Android client.
-	userContr.findFB_id(user.id)
+  // if the user exists we return the user dbID to Android client.
+  // if user doesn't exists, we create one in our db and return the user dbID to Android client.
+	userContr.findFB_id(user.fbid)
 	.then((result) => {
     if (result.length > 0) {
       console.log("User already exists");
