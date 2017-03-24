@@ -239,4 +239,17 @@ router.get('/getHostedEvents/:id', (req, res, next) => {
     });
 });
 
+router.get('/getAttendedEvents/:id', (req, res, next) => {
+
+  const id = parseInt(req.params.id);
+
+    eventContr.getEventsAttendedByUser(id)
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
 module.exports = router;

@@ -34,11 +34,8 @@ function getEventsAttendedByUser( userId ){
 
 function getEventsCreatedByUser( userId ){
   return db.any(`SELECT *
-                  FROM events, (SELECT eventid
-                  			  FROM userAttendingEvent
-                  			  WHERE userid = $1
-                          AND iscreator = true) as u
-                  WHERE events.id = u.eventid`, [userId]);
+                  FROM events
+                  WHERE creator_id = $1`, [userId]);
 }
 
 function getAllAttendees( eventId ){
