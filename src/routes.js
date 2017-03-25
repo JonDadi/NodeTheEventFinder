@@ -149,6 +149,7 @@ router.post('/check', (req, res, next) => {
 
 });
 
+
 router.get('/getAttendees/:eventId', (req, res, next) => {
   const eventId = req.params.eventId;
   eventContr.getAttendees( eventId )
@@ -167,6 +168,8 @@ router.get('/getAttendees/:eventId', (req, res, next) => {
   });
 });
 
+
+// Attending route used by the website
 router.get('/attendEvent/:eventId', (req, res, next) => {
   const eventId = req.params.eventId
   userContr.findUserIdByString(req.user.id)
@@ -180,13 +183,33 @@ router.get('/attendEvent/:eventId', (req, res, next) => {
   })
 });
 
-router.get('/getFullEventInfo/:eventId', (req, res) => {
-  const eventId = parseInt(req.params.eventId);
+// Attending route for android devices.  We might want to merge these two routes later on.
+router.post('/attendEvent', (req, res, next) => {
+  const data = req.body;
+  const eventId = data.eventId;
+  const userId = data.userId;
+  if( userId && eventId ) {
+    eventContr.attendEvent( userId, eventId );
+    console.log("user " + userId + " is attending event " + eventId);
+  }
+
+});
+
+
+router.post('/getFullEventInfo', (req, res, next) => {
+  const eventId = parseInt(req.body.eventId);
+  // UserId is used to check if user is attending or not.
+  const userId = parseInt(req.body.userId);
   eventContr.getEvent( eventId )
   .then( eventData => {
     eventContr.getAttendees( eventId )
     .then( attendeeData => {
+      let isAttending = false;
+      attendeeData.map( attendee => {
+        if( attendee.id === userId) isAttending = true;
+      });
       eventData.attendees = attendeeData;
+      eventData.isAttending = isAttending;
       res.json(eventData);
     })
     .catch( error  => {

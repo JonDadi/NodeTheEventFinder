@@ -39,7 +39,7 @@ function getEventsCreatedByUser( userId ){
 }
 
 function getAllAttendees( eventId ){
-  return db.any(`SELECT users.name
+  return db.any(`SELECT users.name, users.id
                  FROM users, (SELECT userid
                               FROM userAttendingEvent
                               WHERE eventid = $1) as u
