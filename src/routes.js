@@ -190,9 +190,7 @@ router.post('/attendEvent', (req, res, next) => {
   const userId = data.userId;
   if( userId && eventId ) {
     eventContr.attendEvent( userId, eventId );
-    console.log("user " + userId + " is attending event " + eventId);
   }
-
 });
 
 

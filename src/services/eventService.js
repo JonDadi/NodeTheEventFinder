@@ -12,7 +12,11 @@ function createEvent(eventInfo) {
 
 function attendEvent(userId, eventId, isCreator) {
   db.none(`INSERT INTO userAttendingEvent(userId, eventId, isCreator)
-           VALUES($1, $2, $3)`,
+           SELECT $1, $2, $3 WHERE
+           NOT EXISTS(
+             SELECT userId, eventId FROM userAttendingEvent
+             WHERE userId = $1 AND eventId = $2
+           )`,
            [userId, eventId, isCreator]);
 }
 
