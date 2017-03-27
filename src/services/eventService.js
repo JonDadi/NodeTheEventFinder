@@ -56,7 +56,7 @@ function getAllAttendees( eventId ){
 * current date appropriately and send it as a parameter to the function instead.
 */
 function findAllUpcomingAndOngoingEvents( maxDate ) {
-  return db.any(`SELECT * FROM events WHERE end_date >= CURRENT_TIMESTAMP
+  return db.any(`SELECT * FROM events WHERE end_date >= CURRENT_TIMESTAMP AT TIME ZONE 'UTC'
                  AND start_date <= $1`, [maxDate]);
 }
 

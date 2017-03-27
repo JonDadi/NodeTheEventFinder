@@ -2,7 +2,7 @@ const db = require('../dbConnect').db;
 
 function createUser(uAge, uName, uEmail, uFbId, uGender) {
   return db.one(`INSERT INTO users(age, name, email, fb_id, gender, regDate)
-           VALUES($1, $2, $3, $4, $5, CURRENT_TIMESTAMP) RETURNING id`,
+           VALUES($1, $2, $3, $4, $5, CURRENT_TIMESTAMP AT TIME ZONE 'UTC') RETURNING id`,
            [uAge, uName, uEmail, uFbId, uGender]);
 }
 
