@@ -38,6 +38,10 @@ function attendEvent( userId, eventId ) {
    eventServ.attendEvent( userId, eventId, false);
 }
 
+function unAttendEvent( userId, eventId ) {
+   eventServ.unAttendEvent( userId, eventId );
+}
+
 function getEvent( eventId ) {
   return eventServ.getEvent( eventId );
 }
@@ -51,4 +55,5 @@ module.exports = {
     getEventsCreatedByUser,
     getAttendees,
     attendEvent,
+    unAttendEvent
   };

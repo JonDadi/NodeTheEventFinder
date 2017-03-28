@@ -20,6 +20,11 @@ function attendEvent(userId, eventId, isCreator) {
            [userId, eventId, isCreator]);
 }
 
+function unAttendEvent(userId, eventId) {
+  db.none(`DELETE FROM userAttendingEvent
+           WHERE userId = $1 AND eventId = $2`, [userId, eventId]);
+}
+
 function getEvent(eventId) {
   return db.one(`SELECT * FROM events WHERE id = $1`, [eventId]);
 }
@@ -73,6 +78,7 @@ module.exports = {
     findAllUpcomingAndOngoingEvents,
     getEventsFromTo,
     attendEvent,
+    unAttendEvent,
     getEventsCreatedByUser,
     getAllAttendees,
     getEventsAttendedByUser,
