@@ -248,8 +248,9 @@ router.get('/getEventsFromTo/:from/:to', (req, res, next) => {
 
   const from = req.params.from;
   const to = req.params.to;
-
-    eventContr.getEventsFromTo(from, to)
+  const gender_restriction = req.query.gender_restriction;
+  const tag = req.query.tag;
+    eventContr.getEventsFromTo(from, to, gender_restriction, tag)
     .then(data => {
       res.json(data);
     })
