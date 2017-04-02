@@ -28,13 +28,13 @@ function createTables(){
             age_max             integer,
             age_min             integer,
             creator_id          integer,
-            description         varchar(65),
+            description         varchar(100),
             end_date            timestamp,
             start_date          timestamp,
             gender_restriction  boolean,
             lat                 real,
             lgt                 real,
-            name                varChar(32)
+            name                varChar(40)
             )`)
   .then( () => {
     console.log("events table created!");
