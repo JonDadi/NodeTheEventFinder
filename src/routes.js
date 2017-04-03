@@ -93,18 +93,18 @@ router.post('/createEvent', (req, res, next) => {
   const data = req.body;
 
   const isFromAndroid = data.isAndroid;
-  let event = {'ageMin': data.ageMin,
-                    'ageMax': data.ageMax,
-                    'creatorId': parseInt(data.db_id),
-                    'descr': data.descr,
-                    'endDate': data.endDate,
-                    'startDate': data.startDate,
-                    'genderRestrict': data.genderRestrict,
-                    'lati': data.lati,
-                    'long': data.long,
-                    'eventName': data.eventName
-                  }
-
+  const event = {'ageMin': data.ageMin,
+                'ageMax': data.ageMax,
+                'creatorId': parseInt(data.db_id),
+                'descr': data.descr,
+                'endDate': data.endDate,
+                'startDate': data.startDate,
+                'genderRestrict': data.genderRestrict,
+                'lati': data.lati,
+                'long': data.long,
+                'eventName': data.eventName,
+                'category': data.category
+              }
     eventContr.saveEvent( event );
     if(isFromAndroid === 'true') {
       res.json(true)

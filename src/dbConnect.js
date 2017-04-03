@@ -1,5 +1,5 @@
 const pgp = require('pg-promise')();
-const db = pgp(process.env.DATABASE_URL || 'postgres://postgres:gusti@localhost:5432/TheEventFinder');
+const db = pgp(process.env.DATABASE_URL || 'postgres://postgres:dadi@localhost:5432/TheEventFinder');
 
 //Create the tables!
 function createTables(){
@@ -34,7 +34,8 @@ function createTables(){
             gender_restriction  boolean,
             lat                 real,
             lgt                 real,
-            name                varChar(40)
+            name                varChar(40),
+            category            varChar(40)
             )`)
   .then( () => {
     console.log("events table created!");

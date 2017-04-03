@@ -2,12 +2,12 @@ const db = require('../dbConnect').db;
 
 function createEvent(eventInfo) {
   return db.one(`INSERT INTO events(age_max, age_min, creator_id, description,
-            end_date, start_date, gender_restriction, lat, lgt, name)
-            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING id`,
+            end_date, start_date, gender_restriction, lat, lgt, name, category)
+            VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id`,
             [eventInfo.ageMax, eventInfo.ageMin, eventInfo.creatorId,
               eventInfo.descr, eventInfo.endDate, eventInfo.startDate,
               eventInfo.genderRestrict, eventInfo.lati, eventInfo.long,
-              eventInfo.eventName]);
+              eventInfo.eventName, eventInfo.category]);
 }
 
 function attendEvent(userId, eventId, isCreator) {
