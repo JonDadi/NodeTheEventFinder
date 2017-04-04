@@ -67,8 +67,11 @@ function findAllUpcomingAndOngoingEvents( maxDate ) {
 
 
 function getEventsFromTo( from, to, gender_restriction, tag ) {
-  return db.any(`SELECT * FROM events WHERE end_date >= $1
-                 AND start_date <= $2`, [from, to]);
+  return db.any(`SELECT * FROM events
+                 WHERE end_date >= $1
+                 AND start_date <= $2
+                 AND category LIKE $3`
+                 , [from, to, tag]);
 }
 
 module.exports = {
