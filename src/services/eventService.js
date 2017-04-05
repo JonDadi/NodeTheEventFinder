@@ -25,8 +25,8 @@ function unAttendEvent(userId, eventId) {
            WHERE userId = $1 AND eventId = $2`, [userId, eventId]);
 }
 
-function getEvent(eventId, gender) {
-    return db.one(`SELECT * FROM events WHERE id = $1`, [eventId]);
+function getEvent(eventId) {
+  return db.one(`SELECT * FROM events WHERE id = $1`, [eventId]);
 }
 
 function deleteEvent(eventId) {
@@ -55,11 +55,6 @@ function getAllAttendees( eventId ){
                  WHERE users.id = u.userid`, [eventId]);
 }
 
-function deactivateEvent( eventId ) {
-  db.none(`UPDATE events SET isActive = false
-           WHERE id = $1`, [eventId]);
-}
-
 /*
 * Not sure if this will work since our format for start_date and end_date is
 * probably not the same as the Date() format... Then we can just format the
@@ -71,9 +66,18 @@ function findAllUpcomingAndOngoingEvents( maxDate ) {
 }
 
 
-function getEventsFromTo( from, to ) {
-  return db.any(`SELECT * FROM events WHERE end_date >= $1
-                 AND start_date <= $2 AND isActive = true`, [from, to]);
+function getEventsFromTo( from, to, tag ) {
+  return db.any(`SELECT * FROM events
+                 WHERE end_date >= $1
+                 AND start_date <= $2
+                 AND isActive = true
+                 AND category LIKE $3`
+                 , [from, to, tag]);
+}
+
+function deactivateEvent( eventId ) {
+  db.none(`UPDATE events SET isActive = false
+           WHERE id = $1`, [eventId]);
 }
 
 module.exports = {
