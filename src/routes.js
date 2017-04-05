@@ -103,7 +103,8 @@ router.post('/createEvent', (req, res, next) => {
                 'lati': data.lati,
                 'long': data.long,
                 'eventName': data.eventName,
-                'category': data.category
+                'category': data.category,
+                'creatorGender': data.creatorGender
               }
     eventContr.saveEvent( event );
     if(isFromAndroid === 'true') {
@@ -259,11 +260,38 @@ router.get('/getEventsFromTo/:from/:to', (req, res, next) => {
     });
 });
 
+router.post('/getEventsFromToPost', (req, res, next) => {
+
+  const from = req.body.from;
+  const to = req.body.to;
+  const gender = req.body.gender;
+
+  let filteredEvents = [];
+
+    eventContr.getEventsFromTo(from, to)
+    .then(data => {
+      data.map( event => {
+        // Add gender restricted events if the creator gender is the same
+        // as the gender of user requesting the event
+        if(event.gender_restriction && event.creator_gender === gender) {
+          filteredEvents.push( event );
+        }
+        // Add non gender restricted events.
+        else if( !event.gender_restriction ){
+          filteredEvents.push( event );
+        }
+      })
+      res.json(filteredEvents);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+});
+
+
 router.get('/getHostedEvents/:id', (req, res, next) => {
 
   const id = parseInt(req.params.id);
-  console.log("inní server og id er: "+id);
-
     eventContr.getEventsCreatedByUser(id)
     .then(data => {
       res.json(data);
@@ -286,4 +314,11 @@ router.get('/getAttendedEvents/:id', (req, res, next) => {
     });
 });
 
+
+router.post('/deactivateEvent', (req, res, next) => {
+  const eventId = req.body.eventId;
+  //const userId = req.body.userId;
+  eventContr.deactivateEvent(eventId);
+  res.json("deleted");
+});
 module.exports = router;
