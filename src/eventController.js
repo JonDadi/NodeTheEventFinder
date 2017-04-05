@@ -18,8 +18,8 @@ function getAllEvents( maxDate ) {
   return eventServ.findAllUpcomingAndOngoingEvents( maxDate );
 }
 
-function getEventsFromTo( from, to ) {
-  return eventServ.getEventsFromTo( from, to );
+function getEventsFromTo( from, to, tag) {
+  return eventServ.getEventsFromTo( from, to, tag );
 }
 
 function getEventsAttendedByUser( userId ) {

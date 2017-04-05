@@ -266,10 +266,11 @@ router.post('/getEventsFromToPost', (req, res, next) => {
   const from = req.body.from;
   const to = req.body.to;
   const gender = req.body.gender;
+  const tag = req.body.tag;
 
   let filteredEvents = [];
 
-    eventContr.getEventsFromTo(from, to)
+    eventContr.getEventsFromTo(from, to, tag)
     .then(data => {
       data.map( event => {
         // Add gender restricted events if the creator gender is the same
@@ -282,6 +283,7 @@ router.post('/getEventsFromToPost', (req, res, next) => {
           filteredEvents.push( event );
         }
       })
+      console.log(filteredEvents);
       res.json(filteredEvents);
     })
     .catch(error => {
