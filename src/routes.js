@@ -266,8 +266,8 @@ router.post('/getEventsFromToPost', (req, res, next) => {
   const from = req.body.from;
   const to = req.body.to;
   const gender = req.body.gender;
-  const tag = req.body.tag;
-
+  let tag = req.body.tag;
+  if(tag === 'Any') { tag = '%'; }
   let filteredEvents = [];
 
     eventContr.getEventsFromTo(from, to, tag)

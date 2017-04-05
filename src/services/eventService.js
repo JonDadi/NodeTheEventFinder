@@ -71,7 +71,7 @@ function getEventsFromTo( from, to, tag ) {
                  WHERE end_date >= $1
                  AND start_date <= $2
                  AND isActive = true
-                 `
+                 AND category LIKE $3`
                  , [from, to, tag]);
 }
 
