@@ -32,10 +32,12 @@ function createTables(){
             end_date            timestamp,
             start_date          timestamp,
             gender_restriction  boolean,
+            creator_gender      varChar(10),
             lat                 real,
             lgt                 real,
             name                varChar(40),
-            category            varChar(40)
+            category            varChar(40),
+            isActive            boolean
             )`)
   .then( () => {
     console.log("events table created!");

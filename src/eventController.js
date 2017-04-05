@@ -18,8 +18,8 @@ function getAllEvents( maxDate ) {
   return eventServ.findAllUpcomingAndOngoingEvents( maxDate );
 }
 
-function getEventsFromTo( from, to, gender_restriction, tag ) {
-  return eventServ.getEventsFromTo( from, to, gender_restriction, tag );
+function getEventsFromTo( from, to ) {
+  return eventServ.getEventsFromTo( from, to );
 }
 
 function getEventsAttendedByUser( userId ) {
@@ -46,7 +46,12 @@ function getEvent( eventId ) {
   return eventServ.getEvent( eventId );
 }
 
+function deactivateEvent( eventId ) {
+  eventServ.deactivateEvent( eventId );
+}
+
 module.exports = {
+    deactivateEvent,
     getEvent,
     saveEvent,
     getAllEvents,
